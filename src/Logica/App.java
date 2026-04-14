@@ -7,8 +7,43 @@
 
 package Logica;
 
+import java.util.*;
+
 public class App {
+	public static void menu1() {
+		System.out.print("1) Continuar."
+				+ "\n2) Nueva Patida."
+				+ "\n3) Salir."
+				+ "\nIngrese Opcion: ");
+			
+	}
 	public static void main(String[] args) {
-		System.out.println("Hola Taller 2!");
+		
+		Scanner sc = new Scanner(System.in);
+		
+		String opcion = "";
+		
+		
+		
+		while (true) {
+			menu1();
+			opcion = sc.nextLine();
+			if (opcion.equals("1")) {
+				//Funcion continuar partida
+				System.out.println("");
+				break;
+			} else if (opcion.equals("2")) {
+				//Nueva partida
+				System.out.println("");
+				break;
+			} else if (opcion.equals("3")) {
+				break;
+			} else {
+				System.out.println("\nOpción inválida intente de nuevo\n");
+			}
+		}
+		
+		
+		sc.close();
 	}
 }
