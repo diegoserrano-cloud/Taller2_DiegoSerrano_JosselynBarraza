@@ -1,4 +1,6 @@
-public class Pokedex {
+package Clases;
+
+public class pokedex {
 
     private String nombre;
 
@@ -7,7 +9,7 @@ public class Pokedex {
     private int vida, ataque, defensa, ataqueEspecial, defensaEspecial, velocidad;
     private String tipo;
 
-    public Pokedex(String nombre, String habitat, double porcentaje,
+    public pokedex(String nombre, String habitat, double porcentaje,
                    int vida, int ataque, int defensa,
                    int ataqueEspecial, int defensaEspecial,
                    int velocidad, String tipo) {
@@ -31,7 +33,7 @@ public class Pokedex {
 		return nombre;
 	}
 	public double getPorcentajeAparición() {
-		return getPorcentajeAparición();
+		return porcentaje;
 	}
 	public int getVida() {
 		return vida;
