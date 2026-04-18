@@ -10,9 +10,12 @@ package Logica;
 import java.io.*;
 import java.util.*;
 
+import Clases.Jugador;
+import Clases.Pokemon;
 public class App {
-	
-	public static void main(String[] args) {
+	public static Jugador jugador;
+
+	public static void main(String[] args) throws IOException {
 		
 		Scanner sc = new Scanner(System.in);
 		
@@ -26,11 +29,12 @@ public class App {
 			if (opcion.equals("1")) {
 				//Funcion continuar partida
 				menuContinuarPartida(sc);
-				break;
+				
 			} else if (opcion.equals("2")) {
 				//Nueva partida
-				System.out.println("");
-				break;
+				menuNuevaPartida(sc);
+				System.out.println();
+				
 			} else if (opcion.equals("3")) {
 				break;
 			} else {
@@ -78,9 +82,44 @@ public class App {
 			e.printStackTrace();
 		}
 		
+	}
+	
+	//Función n° 3
+	private static void menuNuevaPartida(Scanner sc) throws IOException {
+		BufferedWriter bw = new BufferedWriter(new FileWriter("Registros.txt", true)); //para registrar la partida
+		int op;
+		
+		do {
+			
+		System.out.print("Ingrese su apodo de jugador: ");
+		String apodo = sc.nextLine();
+		
+		System.out.println("Bienvenido "+ apodo + "!!");
 		
 		
+		System.out.print( "1) Revisar equipo.\n"+
+				  "2) Salir a capturar. \n "+
+				  "3) Acceso al PC (cambiar Pokémon del equipo). \n" +
+				  "4) Retar un gimnasio.\n"+
+				  "5) Desafío al Alto Mando.\n"+
+				  "6) Curar Pokémon.\n"+
+				  "7) Guardar.\n"+
+				  "8) Guardar y Salir.\n");
+		op = Integer.parseInt(sc.nextLine());
+		switch(op){
+			case 1: //tirara error por que aun no agregamos un pokemon (no esta inicializado)
+				System.out.println("Equipo Actual: ");
+				jugador.mostrarEquipo(); //Para mostrar el equipo utilizaremos un metodo de Jugador
+				break;
+			case 2:
+				//si se captura un pokemon usaremos el setNombre
+			
+		}
 		
+		}while(op != 8);
 		
 	}
+
+
+
 }

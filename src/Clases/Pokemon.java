@@ -2,44 +2,30 @@ package Clases;
 
 public class Pokemon {
 
-	public String nombre;
-	public String estado;
-	public String tipo;
-	
-	public Pokemon(String nombre, String estado, String tipo) {
-		
-		this.nombre = nombre;
-		this.estado = estado;
-		this.tipo = tipo;
-	}
-	
-	//Get y setters
-	public String getNombre() {
-		return nombre;
-	}
+	public class Pokemon {
 
-	public void setNombre(String nombre) {
-		this.nombre = nombre;
-	}
+	 private Pokedex pokedex;// utilizaremos como base al pokedex
+	 private String estado;
 
-	public String getEstado() {
-		return estado;
-	}
+	    public Pokemon(Pokedex pokedex) {
+	        this.pokedex = pokedex;
+	        this.estado = "Vivo";// por defecto el pokemon esta vivo al capturar
+	    }
 
-	public void setEstado(String estado) {
-		this.estado = estado;
-	}
+	    public String getNombre() {
+	        return pokedex.getNombre();//obtenemos el nombre desde pokedex
+	    }
 
-	public String getTipo() {
-		return tipo;
-	}
+	    public String getTipo() {
+	        return pokedex.getTipo();//lo obtenemos de pokedex
+	    }
 
-	public void setTipo(String tipo) {
-		this.tipo = tipo;
+	    public double getStatsTotales() {
+	        return pokedex.getTotalStats();//lo obtenemos de pokedex
+	    }
+
+	    @Override
+	    public String toString() { //metodo que imprime el quipo del jugador
+	        return getNombre() + " | " + getTipo() + " | Stats totales: " + getStatsTotales();
+	    }
 	}
-	
-	
-	
-	
-	
-}
