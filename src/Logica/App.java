@@ -89,7 +89,7 @@ public class App {
 			br.close();
 
 			System.out.println("Bienvenido de vuelta " + nombreCuenta);
-			// Faltaria llamar la función que empieza el juego
+			menuJuego(sc);
 
 		} catch (FileNotFoundException e) {
 			// TODO Auto-generated catch block
@@ -144,8 +144,38 @@ public class App {
 					break;
 				case 2:
 					//si se captura un pokemon usaremos el setNombre
+				case 7:
+					guardarPartida();
+				case 8:
+					System.out.println("Hasta la proxima " + jugador.getNombre() + "...");
+					guardarPartida();
+					break;
 			}
 			
 		} while (op != 8);
 	}
+	
+	//Función N° 5
+	public static void guardarPartida() {
+		try {
+			//Se usa el false porque queremos que el archivo se reinicie cada vez que alguién guarde
+			BufferedWriter bw = new BufferedWriter(new FileWriter("Registros.txt", false));
+			//Mantenemos el formato del enunciado -> [nombre;medallas]
+			bw.write(jugador.getNombre() + ";" + jugador.getMedallas());
+			bw.newLine();
+			
+			//Acá falta guardar los pokemones, debería ser un arrayList y recorrerlo en un ciclo for gracias 
+			//A la función ".size()" para tener el tamaño
+			
+			bw.close();
+			System.out.println("Partida guardada con exito!");
+			
+ 		} catch (Exception e) {
+			// TODO: handle exception
+ 			System.out.println("Error al guardar la partida");
+ 			e.printStackTrace();
+
+		}
+	}
+	
 }
