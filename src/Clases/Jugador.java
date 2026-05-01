@@ -5,7 +5,7 @@ import java.util.ArrayList;
 public class Jugador {
     private String nombre;
     private String medallas;
-    private ArrayList<Pokemon> pokemones;
+    private static ArrayList<Pokemon> pokemones;
 
     public Jugador(String nombre) {
         this.nombre = nombre;
@@ -15,8 +15,10 @@ public class Jugador {
     }
 
     public void mostrarEquipo() {
-        for (int i = 0; i < pokemones.size(); i++) {
-            System.out.println((i + 1) + ") " + pokemones.get(i));
+    	int cont = 1;
+        for (Pokemon p : pokemones) {
+            System.out.println(cont + ") " + p.getNombre() +"|"+ p.getTipo()+ "|Stats totales: " +p.getStatsTotales());
+            cont++;
         }
     }
     
@@ -34,4 +36,17 @@ public class Jugador {
     public ArrayList<Pokemon> getPokemones() {
         return pokemones;
     }
+
+	public static Boolean buscarE(String nm) {
+		for(Pokemon pk: pokemones) {
+			if(pk.getNombre().equalsIgnoreCase(nm)) {
+				return true;
+			}
+		}
+		return false;
+	}
+
+	public void setMedallas(String medallas) {
+		this.medallas = medallas;
+	}
 }

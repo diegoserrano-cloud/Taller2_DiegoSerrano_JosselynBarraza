@@ -2,17 +2,22 @@ package Clases;
 
 public class Pokemon {
 
-    private pokedex pokedex;
+    private Pokedex pokedex;
     private String estado;
-
-    public Pokemon(pokedex pokedex) {
-        this.pokedex = pokedex;
-        this.estado = "Vivo";
-    }
-
-    public String getNombre() {
-        return pokedex.getNombre();
-    }
+	public Pokemon(Pokedex pokedex) {
+		
+		this.pokedex = pokedex;
+		this.estado = "Vivo";
+	}
+	public Pokedex getPokedex() {
+		return pokedex;
+	}
+	public String getEstado() {
+		return estado;
+	} 
+	public String getNombre() {
+		return pokedex.getNombre();
+	}
 
     public String getTipo() {
         return pokedex.getTipo();
@@ -22,9 +27,6 @@ public class Pokemon {
         return pokedex.getTotalStats();
     }
 
-    public String getEstado() {
-        return estado;
-    }
 
     public void setEstado(String estado) {
         this.estado = estado;
@@ -32,6 +34,10 @@ public class Pokemon {
 
     @Override
     public String toString() {
-        return getNombre() + " | " + getTipo() + " | Stats totales: " + (int) getStatsTotales();
+        return pokedex.getNombre() + " | " + getTipo() + " | Stats totales: " + (int) getStatsTotales();
     }
+
+    
+    
+    
 }

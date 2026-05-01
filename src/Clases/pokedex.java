@@ -1,15 +1,14 @@
 package Clases;
 
-public class pokedex {
-
-    private String nombre;
+public class Pokedex {
+	private String nombre;
 
     private String habitat;
     private double porcentaje;
     private int vida, ataque, defensa, ataqueEspecial, defensaEspecial, velocidad;
     private String tipo;
 
-    public pokedex(String nombre, String habitat, double porcentaje,
+    public Pokedex(String nombre, String habitat, double porcentaje,
                    int vida, int ataque, int defensa,
                    int ataqueEspecial, int defensaEspecial,
                    int velocidad, String tipo) {
@@ -56,5 +55,10 @@ public class pokedex {
 	public String getTipo() {
 		return tipo;
 	}
+	public String getHabitat() {
+		return habitat;
+	}
+	
 
 }
+
