@@ -5,7 +5,7 @@ import java.util.ArrayList;
 public class Jugador {
     private String nombre;
     private String medallas;
-    private static ArrayList<Pokemon> pokemones;
+    private ArrayList<Pokemon> pokemones;
 
     public Jugador(String nombre) {
         this.nombre = nombre;
@@ -37,7 +37,7 @@ public class Jugador {
         return pokemones;
     }
 
-	public static Boolean buscarE(String nm) {
+	public Boolean buscarE(String nm) {
 		for(Pokemon pk: pokemones) {
 			if(pk.getNombre().equalsIgnoreCase(nm)) {
 				return true;

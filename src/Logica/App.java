@@ -106,8 +106,13 @@ public class App {
 				String estado = partes2[1];
 				
 				//####
-				Pokedex pkx = buscarPoke(nombrePokemon);
-				jugador.agregarPokemon(new Pokemon(pkx));
+				Pokedex pkx = buscarPoke(nombrePokemon); 
+				Pokemon poke = new Pokemon(pkx);
+				poke.setEstado(estado);
+				jugador.agregarPokemon(poke);
+				
+				
+				
 				// Simplemente para verificar si lo lee bien, después se borrara
 				System.out.println("Pokemon: " + nombrePokemon + " | Estado: " + estado);
 				
@@ -182,13 +187,17 @@ public class App {
 					jugador.mostrarEquipo();
 					break;
 				case 2:
-					capturar();
+					capturar(sc);
 					System.out.println();
 					//si se captura un pokemon usaremos el setNombre
 					break;
 				case 3:
-					 AccesoPC();
+					 AccesoPC(sc);
 					 System.out.println();
+					break;
+				case 6:
+					curarPokemones();
+					System.out.println();
 					break;
 				case 7:
 					guardarPartida();
@@ -204,7 +213,7 @@ public class App {
 	
 
 	//funcion 5:  capturar pokemones
-	private static void capturar() {
+	private static void capturar(Scanner sc) {
 		Random r = new Random();
 		System.out.println();
 		System.out.println("Donde deseas ir a explorar? ");
@@ -221,38 +230,66 @@ public class App {
 				}	
 			
 			System.out.println("7) Volver al menu.");
-			op = inputInt("Ingrese una opción: ");
+			op = inputInt("Ingrese una opción: ", sc);
 				
 			System.out.println();
 			
 			if(op != 7) {
 				String hbt = zonas.get(op-1);//obtenemos la zona en esta posición
 				Boolean pok = false;
-				int num = -1;
-				while(pok != true) { //mientras el pokedex no sea de la misma zona seguira buscando
-					num = r.nextInt(pdxs.size());
-					pok = buscar(hbt, num);//busca si el habitat es la misma	
-				}
-				if(pok == true) {//Para cuando ya encuentra un pokedex del mismo habitat
-					System.out.println("Oh!! Ha aparecido un increible "+ pdxs.get(num).getNombre()+"!!");
-					System.out.println();
-				} menuCaptura();
 				
+				ArrayList<Pokedex> pokemonesZona = new ArrayList<>(); //Creamos un ArrayList que solo guarde los pokemones de ese habitat
+	            for (Pokedex pk : pdxs) {
+	                if (pk.getHabitat().equalsIgnoreCase(hbt)) {
+	                    pokemonesZona.add(pk);
+	                }
+	            }
+				
+	            if (pokemonesZona.isEmpty()) {
+	                System.out.println("No hay pokemones en esta zona.");
+	                continue;
+	            }
+	            
+	            
+	            double aleatorio = r.nextDouble();
+	            double acumulado = 0.0;
+	            Pokedex elegido = null;
+
+	            for (Pokedex pk : pokemonesZona) {
+	                acumulado += pk.getPorcentajeAparición();
+	                if (aleatorio <= acumulado) {
+	                    elegido = pk;
+	                    break;
+	                }
+	            }
+
+	            // Por si hay algún error de redondeo y no se eligió ninguno
+	            if (elegido == null) {
+	                elegido = pokemonesZona.get(pokemonesZona.size() - 1);
+	            }
+				
+	            System.out.println("Oh!! Ha aparecido un increible " + elegido.getNombre() + "!!");
+	            System.out.println();
+	            menuCaptura();
+	            
+	            
 				int opCap;
 				do{
-					opCap= inputInt("Ingrese una opción: ");
+					opCap= inputInt("Ingrese una opción: ", sc);
 					System.out.println();
 					if(opCap == 1) {
-						Boolean pk = jugador.buscarE(pdxs.get(num).getNombre());//busca si el pokemon ya existe en la lista
+						Boolean pk = jugador.buscarE(elegido.getNombre());//busca si el pokemon ya existe en la lista
 						if(pk == false) { //si no existe se agrega a la lista del pokemon
-							jugador.agregarPokemon(new Pokemon(pdxs.get(num)));
-							System.out.println("Se capturo "+ pdxs.get(num).getNombre()+ " con existo!!");}
+							jugador.agregarPokemon(new Pokemon(elegido));
+							System.out.println("Se capturo "+ elegido.getNombre()+ " con exito!!");}
 						else {
 							System.out.println("Ya tienes este pokemon!!");
 							System.out.println();
-						}break;
-					}else if(opCap!= 2){
-						System.out.println("Opcion invalida.");
+						} break;
+					} else if(opCap == 2){
+						System.out.println("Has huido del combate!! " + elegido.getNombre() + " esta decepcionado de tí");
+					} else {
+						System.out.println("Opción invalida, intenta de nuevo.");
 					}
 				}while(opCap!= 2);
 			}
@@ -261,6 +298,7 @@ public class App {
 		
 		return;
 	}
+	
 	private static void leerHabitat() throws IOException {
 		BufferedReader br = new BufferedReader(new FileReader("Habitats.txt"));
 		String linea;
@@ -335,7 +373,7 @@ public class App {
 		
 	}
 	//funcion 10: acceso al PC
-		private static void AccesoPC() {
+		private static void AccesoPC(Scanner sc) {
 			int j = 1;
 			System.out.println();
 			System.out.println("Pokemones capturados");
@@ -347,7 +385,7 @@ public class App {
 			do {
 				System.out.println("1) Cambiar Pokémon.\n" + 
 								   "2) Salir");
-				op = inputInt("Ingrese una opción:");
+				op = inputInt("Ingrese una opción:", sc);
 				if(op == 1) {
 					int size = jugador.getPokemones().size();
 					int posI;
@@ -357,10 +395,10 @@ public class App {
 					System.out.println();
 					//evita posiciones iguales o fuera del rango
 					do {
-					    posI = inputInt("Ingrese la posicion del primer pokemon: ");
+					    posI = inputInt("Ingrese la posicion del primer pokemon: ", sc);
 					} while (posI-1 < 0 || posI-1 >= size);
 					do {
-						posT = inputInt("Ingrese la posicion del segundo pokemon: ");
+						posT = inputInt("Ingrese la posicion del segundo pokemon: ", sc);
 						if(posI == posT) {
 							System.out.println("No se puede intercambiar el mismo pokemon");
 							System.out.println();
@@ -379,16 +417,32 @@ public class App {
 			}while(op!=2);
 		}
 	//funcion : Facilida preguntar las opciones o algun numero en particular
-	public static int inputInt(String mg) {
-	    Scanner s = new Scanner(System.in);
+	public static int inputInt(String mg, Scanner sc) {
+	   
 	    System.out.print(mg);
 	    
-	    while (!s.hasNextInt()) {
+	    while (!sc.hasNextInt()) {
 	        System.out.println("Ingrese un número válido: ");
-	        s.next(); // limpia l
+	        sc.next(); // limpia l
 	    }
 	    
-	    return s.nextInt();
+	    return sc.nextInt();
+	}
+	
+	//Función 11
+	private static void curarPokemones() {
+	    ArrayList<Pokemon> lista = jugador.getPokemones();
+
+	    if (lista.isEmpty()) {
+	        System.out.println("No tienes pokemones para curar.");
+	        return;
+	    }
+
+	    for (Pokemon p : lista) {
+	        p.setEstado("Vivo");
+	    }
+
+	    System.out.println("Tu equipo se ha recuperado!");
 	}
 
 }
