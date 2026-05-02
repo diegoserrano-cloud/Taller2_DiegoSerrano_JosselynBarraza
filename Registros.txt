@@ -5,3 +5,4 @@ Magikarp;Vivo
 Scizor;Vivo
 Tentacruel;Vivo
 Reshiram;Vivo
+Infernape;Vivo
