@@ -34,5 +34,10 @@ public class Gimnasio {
 	public String toString() {
 		return "Gimnasio [nro=" + nro + ", nombre=" + nombre + ", estado=" + estado + "]";
 	}
+
+	public void setEstado(String estado) {
+		this.estado = estado;
+		
+	}
 	
 }
