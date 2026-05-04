@@ -17,6 +17,8 @@ public class App {
 	public static ArrayList<String> zonas = new ArrayList<>();
 	public static ArrayList<Gimnasio> gim = new ArrayList<>();
 	public static ArrayList<String> medallas = new ArrayList<>();
+	public static ArrayList<AltoMando> altoMando = new ArrayList<>();
+	
 	public static void main(String[] args) throws IOException {
 		App a = new App();
 		a.ejecutar();
@@ -27,6 +29,7 @@ public class App {
 		leerPokedex();// lee el archivo que contiene a los pokedex
 		leerHabitat();// lee el archivo de las habitat
 		leerGimnasios();// Lee el archivo de los gimasios
+		leerAltoMando(); // Lee el archivo del Alto mando
 		Scanner sc = new Scanner(System.in);
 
 		String opcion = "";
@@ -55,6 +58,8 @@ public class App {
 
 		sc.close();
 	}
+
+	
 
 	// Función: muestra el menu inicial
 	public static void menuPrincipal() {
@@ -186,7 +191,8 @@ public class App {
 
 		} while (op != 8);
 	}
-
+	
+	// Desafiar al alto mando función 12
 	private static void retarAltoMando(Scanner sc, Random r) {
 		for (Gimnasio g : gim) {
 	        if (g.getEstado().equalsIgnoreCase("Sin derrotar")) {
@@ -219,12 +225,46 @@ public class App {
 	        return;
 	    }
 
-	    System.out.println("Desafiando al Alto Mando!!");
+	    System.out.println("Desafiando al Alto Mando!");
 	    System.out.println();
 	    
-	    /*
-	     * Falta la logica completa detrás de esto pero creo que al menos está la mini base
-	     */
+	   for (int i = 0; i < altoMando.size(); i++) {
+		   AltoMando rival = altoMando.get(i);
+		   
+		   int index = r.nextInt(rival.getPk().size());
+	       Pokedex rivalPoke = rival.getPk().get(index);
+	       
+	       System.out.println("Desafiando a " + rival.getNombre() + "!!");
+	       System.out.println(rival.getNombre() + " saca a " + rivalPoke.getNombre() + "!");
+	       System.out.println(jugador.getNombre() + " saca a " + jugadorPoke.getNombre() + "!");
+	       System.out.println();
+	       
+	       boolean batallaActiva = true;
+	       
+	       while(batallaActiva) {
+	    	   System.out.println("Qué deseas hacer\n"
+	    	   		+ "1) Atacar\n"
+	    	   		+ "2) Cambiar de Pokemon\n"
+	    	   		+ "3) Rendirse\n");
+	    	   
+	    	   int opp = inputInt("Ingrese una opción: ", sc);
+	           System.out.println();
+	           
+	           if (opp == 1) {
+	                // aquí va la lógica de combate igual que en gimnasio
+	                // por implementar
+
+	            } else if (opp == 2) {
+	                // La misma logica qué en el gim
+	                // por implementar
+
+	            } else if (opp == 3) {
+	                System.out.println("Te has rendido!! Volviendo al menu...");
+	                return; 
+	            }
+	       }
+	       
+	}
 		
 	}
 
@@ -743,7 +783,28 @@ public class App {
 		}
 		br.close();
 	}
+	
+	// Función lectura de archivo "Alto Mando"
+	private void leerAltoMando() throws IOException {
+		BufferedReader br = new BufferedReader(new FileReader("Alto Mando.txt"));
+	    String linea;
 
+	    while ((linea = br.readLine()) != null) {
+	        String[] partes = linea.split(";");
+	        int nro = Integer.parseInt(partes[0]);
+	        String nombre = partes[1];
+
+	        AltoMando am = new AltoMando(nro, nombre);
+	        altoMando.add(am);
+	        
+	        for (int i = 2; i <= 7; i++) {
+	            Pokedex poke = buscarPoke(partes[i]);
+	            am.agregarP(poke); 
+	        }
+	    }
+	    br.close();
+	}
+	
 	// lee el archivo "Gimnasios
 	private void leerGimnasios() throws IOException {
 		BufferedReader br = new BufferedReader(new FileReader("Gimnasios.txt"));
