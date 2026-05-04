@@ -11,8 +11,6 @@ import java.io.*;
 import java.util.*;
 import Clases.*;
 
-import java.util.Random;
-
 public class App {
 	public static Jugador jugador;
 	public static ArrayList<Pokedex> pdxs = new ArrayList<>();
@@ -171,6 +169,8 @@ public class App {
 			case 4:
 				retarGimnasio(sc, r);
 				break;
+			case 5:
+				retarAltoMando(sc, r);
 			case 6:
 				curarPokemones();
 				System.out.println();
@@ -185,6 +185,47 @@ public class App {
 			}
 
 		} while (op != 8);
+	}
+
+	private static void retarAltoMando(Scanner sc, Random r) {
+		for (Gimnasio g : gim) {
+	        if (g.getEstado().equalsIgnoreCase("Sin derrotar")) {
+	            System.out.println("Necesitas derrotar los 8 gimnasios primero!");
+	            System.out.println();
+	            return;
+	        }
+	    }
+
+	    // Verificar que tenga pokémones vivos 
+	    int limite = calcularLimite();
+	    Pokedex jugadorPoke = null;
+	    Pokemon pokemonJugador = null;
+
+	    for (int j = 0; j < limite; j++) {
+	        Pokemon pok = jugador.getPokemones().get(j);
+	        if (pok.getEstado().equalsIgnoreCase("Vivo")) {
+	            Pokedex aux = buscarPoke(pok.getNombre());
+	            if (aux != null) {
+	                pokemonJugador = pok;
+	                jugadorPoke = aux;
+	                break;
+	            }
+	        }
+	    }
+
+	    if (jugadorPoke == null) {
+	        System.out.println("No tienes pokemones vivos! Cura tu equipo primero.");
+	        System.out.println();
+	        return;
+	    }
+
+	    System.out.println("Desafiando al Alto Mando!!");
+	    System.out.println();
+	    
+	    /*
+	     * Falta la logica completa detrás de esto pero creo que al menos está la mini base
+	     */
+		
 	}
 
 	// funcion 2: capturar pokemones
@@ -328,6 +369,20 @@ public class App {
 	// funcion 4: Retar Gimnasio
 	private static void retarGimnasio(Scanner sc, Random r) {
 
+		boolean todosGanados = true;
+	    for (Gimnasio g : gim) {
+	        if (g.getEstado().equalsIgnoreCase("Sin derrotar")) {
+	            todosGanados = false;
+	            break;
+	        }
+	    }
+	    if (todosGanados) {
+	        System.out.println("Ya has ganado todas las medallas! No hay lideres que retar.");
+	        System.out.println();
+	        return; 
+	    }
+
+		
 		System.out.println();
 		System.out.println("A cual Lider deseas retar? ");
 		System.out.println();
@@ -375,7 +430,7 @@ public class App {
 				}
 
 				int limite = calcularLimite();// Calcula el tamaño del equipo
-				boolean estado = false;
+				
 				Pokedex jugadorPoke = null;
 				Pokemon pokemonJugador = null;
 				// Busca un pokedex que tenga estado Vivo
@@ -392,9 +447,9 @@ public class App {
 	                    }
 	                }
 	            } if (jugadorPoke == null) {
-	                System.out.println("No tienes pokemones para pelear.");
-	                
-	                continue;
+	                System.out.println("No tienes pokemones vivos! Cura tu equipo primero.");
+	                System.out.println();
+	                return; 
 	            }
 
 				int index = r.nextInt(gim.get(op - 1).getPk().size());
@@ -425,7 +480,7 @@ public class App {
 					    if (!quedanVivosGlobal) {
 					        System.out.println("Te has quedado sin pokemones!");
 					        System.out.println("Volviendo al menu...");
-					        break;
+					        return;
 					        
 					    }
 					System.out.println();
@@ -464,10 +519,10 @@ public class App {
 
 						}
 
-						Boolean victoria = false;
+						
 						if (totalJugador > totalRival) {
 							System.out.println("Ha ganado " + jugadorPoke.getNombre() + "!");
-							victoria = true;
+							
 							
 							//Marcar gimnasio como derrotado
 						    gim.get(op - 1).setEstado("Derrotado");
@@ -480,11 +535,11 @@ public class App {
 						    }
 						    
 						    batallaActiva = false; 
-						    break;
+						    return; // Nos devuelve al menú
 
 						} else if (totalJugador == totalRival) {
 							System.out.println("Empate");
-							victoria = null;
+							
 							batallaActiva = false;
 							
 							
@@ -518,8 +573,8 @@ public class App {
 							 if (nextPokemon == null) {
 						        System.out.println("Te has quedado sin pokemones!");
 						        System.out.println("Volviendo al menu...");
-						        batallaActiva = false;
-						        continue;
+						        //batallaActiva = false;
+						        return;
 						        
 							}else {
 								pokemonJugador= nextPokemon;
@@ -557,9 +612,9 @@ public class App {
 					}
 
 					
-				}continue;
+				}
 
-			}break;
+			}
 		} while (op != 9);
 	}
 	//funcion: calcula el tamaño del equipo
