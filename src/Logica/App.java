@@ -392,7 +392,8 @@ public class App {
 	                    }
 	                }
 	            } if (jugadorPoke == null) {
-	                System.out.println("No tienes pokemones pelear.");
+	                System.out.println("No tienes pokemones para pelear.");
+	                
 	                continue;
 	            }
 
@@ -558,7 +559,7 @@ public class App {
 					
 				}continue;
 
-			}
+			}break;
 		} while (op != 9);
 	}
 	//funcion: calcula el tamaño del equipo
