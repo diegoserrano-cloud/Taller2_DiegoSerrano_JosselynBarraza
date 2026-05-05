@@ -1,8 +1,8 @@
-Ash;EmmaLaArdillaRabiosa;MartinNegro;Ferran;Branco;Remi;Pruno
-Centiskorch;Debilitado
-Sceptile;Debilitado
-Magikarp;Debilitado
-Scizor;Debilitado
-Tentacruel;Debilitado
-Reshiram;Debilitado
+Ash;EmmaLaArdillaRabiosa;Dani;Maxi
 Infernape;Vivo
+Sceptile;Vivo
+Magikarp;Vivo
+Scizor;Vivo
+Tentacruel;Vivo
+Reshiram;Vivo
+Centiskorch;Vivo

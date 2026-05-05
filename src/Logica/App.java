@@ -150,6 +150,7 @@ public class App {
 	public static void menuJuego(Scanner sc) throws IOException {
 		int op;
 		Random r = new Random();
+		Boolean campeon = false;//sirve para saber si derroto a todos los Alto mando
 		do {
 			System.out.print("¡" + jugador.getNombre() + "!, que deseas hacer?" + "\n1) Revisar equipo.\r\n"
 					+ "2) Salir a capturar.\r\n" + "3) Acceso al PC (cambiar Pokémon del equipo).\r\n"
@@ -157,7 +158,6 @@ public class App {
 					+ "7) Guardar.\r\n" + "8) Guardar y Salir.");
 
 			op = inputInt("Ingrese una opciòn: ", sc);
-
 			switch (op) {
 			case 1:
 				System.out.println("Equipo actual: ");
@@ -175,17 +175,21 @@ public class App {
 				retarGimnasio(sc, r);
 				break;
 			case 5:
-				retarAltoMando(sc, r);
+				retarAltoMando(sc, r, campeon);
+				System.out.println(campeon);
+				System.out.println("fuera de alto mando");//despues se borrara es para ver si funciona
+				System.out.println();
+				break;
 			case 6:
 				curarPokemones();
 				System.out.println();
 				break;
 			case 7:
-				guardarPartida();
+				guardarPartida(campeon);
 				break;
 			case 8:
 				System.out.println("Hasta la proxima " + jugador.getNombre() + "...");
-				guardarPartida();
+				guardarPartida(campeon);
 				break;
 			}
 
@@ -193,7 +197,7 @@ public class App {
 	}
 	
 	// Desafiar al alto mando función 12
-	private static void retarAltoMando(Scanner sc, Random r) {
+	private static void retarAltoMando(Scanner sc, Random r, Boolean campeon) {
 		for (Gimnasio g : gim) {
 	        if (g.getEstado().equalsIgnoreCase("Sin derrotar")) {
 	            System.out.println("Necesitas derrotar los 8 gimnasios primero!");
@@ -227,7 +231,7 @@ public class App {
 
 	    System.out.println("Desafiando al Alto Mando!");
 	    System.out.println();
-	    
+	   int k = 0;
 	   for (int i = 0; i < altoMando.size(); i++) {
 		   AltoMando rival = altoMando.get(i);
 		   
@@ -244,27 +248,108 @@ public class App {
 	       while(batallaActiva) {
 	    	   System.out.println("Qué deseas hacer\n"
 	    	   		+ "1) Atacar\n"
-	    	   		+ "2) Cambiar de Pokemon\n"
-	    	   		+ "3) Rendirse\n");
+	    	   		+ "2) Rendirse\n");
 	    	   
-	    	   int opp = inputInt("Ingrese una opción: ", sc);
-	           System.out.println();
+	    	   		int opp = inputInt("Ingrese una opción: ", sc);
+	    	   		System.out.println();
 	           
-	           if (opp == 1) {
-	                // aquí va la lógica de combate igual que en gimnasio
-	                // por implementar
+	    	   		if (opp == 1) {
+	    	   			TablaTipos tabla = new TablaTipos();
+						String tipoJ = jugadorPoke.getTipo();
+						String tipoR = rivalPoke.getTipo();
 
+						double efectivo = tabla.getEfectividad(tipoJ, tipoR);
+						double totalJugador = jugadorPoke.getTotalStats();
+						double totalRival = rivalPoke.getTotalStats();
+
+						System.out.println(jugadorPoke.getNombre() + " -> " + totalJugador + " puntos");
+						System.out.println(rival.getNombre() + " -> " + totalRival + " puntos");
+
+						if (efectivo == 2.0) {
+							System.out.println(
+								jugadorPoke.getNombre() + " es efectivo contra " + rival.getNombre() + "!");
+							totalJugador = totalJugador * efectivo;
+							System.out.println();
+							System.out.println("Nuevo puntaje:");
+							System.out.println(jugadorPoke.getNombre() + " -> " + totalJugador + " puntos");
+							System.out.println(rival.getNombre() + " -> " + totalRival + " puntos");
+						} else if (efectivo == 0.5) {
+							System.out.println(
+									jugadorPoke.getNombre() + " no es efectivo contra " + rival.getNombre() + "!");
+							totalJugador = totalJugador * efectivo;
+							System.out.println();
+							System.out.println("Nuevo puntaje:");
+							System.out.println(jugadorPoke.getNombre() + " -> " + totalJugador + " puntos");
+							System.out.println(rival.getNombre() + " -> " + totalRival + " puntos");
+
+						}
+
+						
+						if (totalJugador > totalRival) {
+							System.out.println("Ha ganado " + jugadorPoke.getNombre() + "!");
+							System.out.println();
+						    
+						    batallaActiva = false; 
+						    k++;
+
+						} else if (totalJugador == totalRival) {
+							System.out.println("Empate");
+							
+							batallaActiva = false;
+							
+							
+						} else {
+							for (int j = 0; j < limite; j++) {
+							    if (jugador.getPokemones().get(j) == pokemonJugador) {
+							        jugador.getPokemones().get(j).setEstado("Debilitado");
+							        break;
+							    }
+							}
+							
+							System.out.println("Ha ganado " + rival.getNombre() + "!");
+							
+							//Revisar si queda un siguiente pokemon
+							Pokemon nextPokemon = null;
+	                        Pokedex nextPokedex = null;
+							 for (int j = 0; j < limite; j++) {
+		                            Pokemon pok = jugador.getPokemones().get(j);
+
+		                            if (pok.getEstado().equalsIgnoreCase("Vivo")) {
+		                                Pokedex aux = buscarPoke(pok.getNombre());
+
+		                                if (aux != null) {
+		                                    nextPokemon = pok;
+		                                    nextPokedex = aux;
+		                                    break;
+		                                }
+		                            }
+		                        }
+							
+							 if (nextPokemon == null) {
+						        System.out.println("Te has quedado sin pokemones!");
+						        System.out.println("Volviendo al menu...");
+						        return;
+						        
+							}else {
+								pokemonJugador= nextPokemon;
+								jugadorPoke = buscarPoke(nextPokemon.getNombre());
+								System.out.println(jugador.getNombre()+" saca a " + jugadorPoke.getNombre()+"!");
+								System.out.println();
+							}
+							
+						} 
 	            } else if (opp == 2) {
-	                // La misma logica qué en el gim
-	                // por implementar
-
-	            } else if (opp == 3) {
 	                System.out.println("Te has rendido!! Volviendo al menu...");
+	                System.out.println();
 	                return; 
 	            }
 	       }
 	       
-	}
+		}if(k == altoMando.size()) {
+	    	System.out.println("Te has coronado como el campeón!!");
+	    	campeon = true;
+	    	return;
+		}
 		
 	}
 
@@ -695,7 +780,7 @@ public class App {
 	}
 
 	// Función 7 y 8: Guarda los cambios en "Registros.txt"
-	public static void guardarPartida() {
+	public static void guardarPartida(Boolean campeon) {
 		try {
 			// Se usa el false porque queremos que el archivo se reinicie cada vez que
 			// alguién guarde
@@ -728,6 +813,9 @@ public class App {
 				}b.newLine();
 			}b.close();
 			System.out.println("Partida guardada con exito!");
+			if(campeon == true) {
+				
+			}
 
 		} catch (Exception e) {
 			// TODO: handle exception
