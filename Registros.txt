@@ -1,8 +1,10 @@
-Ash;EmmaLaArdillaRabiosa;Dani;Maxi
+Ash;EmmaLaArdillaRabiosaAsh;EmmaLaArdillaRabiosa
 Infernape;Vivo
 Sceptile;Vivo
-Magikarp;Vivo
-Scizor;Vivo
+Mew;Vivo
+Snorlax;Vivo
 Tentacruel;Vivo
 Reshiram;Vivo
 Centiskorch;Vivo
+Scizor;Vivo
+Magikarp;Vivo

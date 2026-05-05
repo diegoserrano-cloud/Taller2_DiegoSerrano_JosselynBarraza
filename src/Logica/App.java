@@ -13,6 +13,7 @@ import Clases.*;
 
 public class App {
 	public static Jugador jugador;
+	public static boolean campeon = false;
 	public static ArrayList<Pokedex> pdxs = new ArrayList<>();
 	public static ArrayList<String> zonas = new ArrayList<>();
 	public static ArrayList<Gimnasio> gim = new ArrayList<>();
@@ -85,6 +86,10 @@ public class App {
 				System.out.println("No hay partidas guardadas");
 				return;
 			}
+			
+			if (medallas.contains("CAMPEON")) {
+			    App.campeon = true;
+			}
 
 			String[] partes = linea.split(";");
 
@@ -150,12 +155,12 @@ public class App {
 	public static void menuJuego(Scanner sc) throws IOException {
 		int op;
 		Random r = new Random();
-		Boolean campeon = false;//sirve para saber si derroto a todos los Alto mando
+		
 		do {
 			System.out.print("¡" + jugador.getNombre() + "!, que deseas hacer?" + "\n1) Revisar equipo.\r\n"
 					+ "2) Salir a capturar.\r\n" + "3) Acceso al PC (cambiar Pokémon del equipo).\r\n"
 					+ "4) Retar un gimnasio.\r\n" + "5) Desafío al Alto Mando.\r\n" + "6) Curar Pokémon.\r\n"
-					+ "7) Guardar.\r\n" + "8) Guardar y Salir.");
+					+ "7) Guardar.\r\n" + "8) Guardar y Salir.\n");
 
 			op = inputInt("Ingrese una opciòn: ", sc);
 			switch (op) {
@@ -175,8 +180,8 @@ public class App {
 				retarGimnasio(sc, r);
 				break;
 			case 5:
-				retarAltoMando(sc, r, campeon);
-				System.out.println(campeon);
+				retarAltoMando(sc, r);
+				System.out.println();
 				System.out.println("fuera de alto mando");//despues se borrara es para ver si funciona
 				System.out.println();
 				break;
@@ -185,19 +190,23 @@ public class App {
 				System.out.println();
 				break;
 			case 7:
-				guardarPartida(campeon);
+				guardarPartida();
 				break;
 			case 8:
 				System.out.println("Hasta la proxima " + jugador.getNombre() + "...");
-				guardarPartida(campeon);
+				guardarPartida();
 				break;
-			}
+			default:
+				System.out.println("Ingrese un valor correcto!!");
+				
+			} 
+				
 
 		} while (op != 8);
 	}
 	
 	// Desafiar al alto mando función 12
-	private static void retarAltoMando(Scanner sc, Random r, Boolean campeon) {
+	private static void retarAltoMando(Scanner sc, Random r) {
 		for (Gimnasio g : gim) {
 	        if (g.getEstado().equalsIgnoreCase("Sin derrotar")) {
 	            System.out.println("Necesitas derrotar los 8 gimnasios primero!");
@@ -347,7 +356,7 @@ public class App {
 	       
 		}if(k == altoMando.size()) {
 	    	System.out.println("Te has coronado como el campeón!!");
-	    	campeon = true;
+	    	App.campeon = true;
 	    	return;
 		}
 		
@@ -371,8 +380,13 @@ public class App {
 			}
 
 			System.out.println("7) Volver al menu.");
-			op = inputInt("Ingrese una opción: ", sc);
-
+			do {
+		        op = inputInt("Ingrese una opción: ", sc);
+		        if (op < 1 || op > 7) {
+		            System.out.println("Opción invalida.");
+		        }
+		    } while (op < 1 || op > 7);
+			
 			System.out.println();
 
 			if (op != 7) {
@@ -653,7 +667,7 @@ public class App {
 						    gim.get(op - 1).setEstado("Derrotado");
 						    
 						    //guardar la medalla
-						    if (jugador.getMedallas().equals("SM")) {
+						    if (jugador.getMedallas().equals("none")) {
 						        jugador.setMedallas(gim.get(op - 1).getNombre());
 						    } else {
 						        jugador.setMedallas(jugador.getMedallas() + ";" + gim.get(op - 1).getNombre());
@@ -780,13 +794,20 @@ public class App {
 	}
 
 	// Función 7 y 8: Guarda los cambios en "Registros.txt"
-	public static void guardarPartida(Boolean campeon) {
+	public static void guardarPartida() {
 		try {
 			// Se usa el false porque queremos que el archivo se reinicie cada vez que
 			// alguién guarde
 			BufferedWriter bw = new BufferedWriter(new FileWriter("Registros.txt", false));
 			// Mantenemos el formato del enunciado -> [nombre;medallas]
 			bw.write(jugador.getNombre() + ";" + jugador.getMedallas());
+			
+			//Simplemente para saber si el usuario es CAMPEON a la hora de leer el archivo
+			if (App.campeon) {
+			    jugador.setMedallas(jugador.getMedallas() + ";CAMPEON");
+			}
+			bw.write(jugador.getNombre() + ";" + jugador.getMedallas());
+			
 			bw.newLine();
 
 			for (Pokemon p : jugador.getPokemones()) { // por cada pokemon del jugador se guardara en el archivo
@@ -800,6 +821,9 @@ public class App {
 				//1;EmmaLaArdillaRabiosa;Sin derrotar;3;Minun;Plusle;Emolga
 				Gimnasio g = gim.get(i);
 				b.write(g.getNro()+";"+g.getNombre()+";"+g.getEstado()+";"+g.getPk().size()+";");
+				
+				
+				
 				int n = g.getPk().size();
 				int j = 1;
 				for(Pokedex pp: g.getPk()) {
@@ -830,12 +854,16 @@ public class App {
 
 		System.out.print(mg);
 
-		while (!sc.hasNextInt()) {
-			System.out.println("Ingrese un número válido: ");
-			sc.next(); // limpia l
+		while (true) {
+			try {
+				return Integer.parseInt(sc.nextLine().trim());
+	        } catch (NumberFormatException e) {
+	            System.out.println("Ingrese un número válido: ");
+	        }
+			
 		}
 
-		return sc.nextInt();
+	
 	}
 
 	// funcion : lee el archivo "Pokedex.txt"

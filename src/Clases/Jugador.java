@@ -10,7 +10,7 @@ public class Jugador {
     public Jugador(String nombre) {
         this.nombre = nombre;
         //Dado a que el jugador nuevo no posee medallas, se le asignara el valor "SM" (Sin Medallas)
-        this.medallas = "SM";
+        this.medallas = "none";
         this.pokemones = new ArrayList<>();
     }
 
