@@ -1,10 +1,10 @@
-Ash;EmmaLaArdillaRabiosaAsh;EmmaLaArdillaRabiosa
-Infernape;Vivo
-Sceptile;Vivo
-Mew;Vivo
-Snorlax;Vivo
-Tentacruel;Vivo
-Reshiram;Vivo
+Ash;EmmaLaArdillaRabiosa;MartinNegro;Ferran;Branco;Remi;Pruno;Dani;Maxi
+Infernape;Debilitado
+Sceptile;Debilitado
+Mew;Debilitado
+Snorlax;Debilitado
+Tentacruel;Debilitado
+Reshiram;Debilitado
 Centiskorch;Vivo
 Scizor;Vivo
 Magikarp;Vivo

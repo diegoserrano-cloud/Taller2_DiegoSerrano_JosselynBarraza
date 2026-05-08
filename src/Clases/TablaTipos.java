@@ -1,8 +1,7 @@
 package Clases;
 
 public class TablaTipos {
-	private String tipoJugador;
-	private String tipoRival;
+	
 	private static String[] tipos = {
 		        "Normal","Fuego","Agua","Planta","Electrico","Hielo",
 		        "Lucha","Veneno","Tierra","Volador","Psiquico","Bicho",
@@ -49,11 +48,5 @@ public class TablaTipos {
 
         return EFECTIVIDAD[fila][columna];
     }
-	public String getTipoJugador() {
-		return tipoJugador;
-	}
-	public String getTipoRival() {
-		return tipoRival;
-	}
 	
 }
