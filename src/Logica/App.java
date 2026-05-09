@@ -12,12 +12,12 @@ import java.util.*;
 import Clases.*;
 
 public class App {
-	public static Jugador jugador;
+	private static Jugador jugador;
 	
-	public static ArrayList<Pokedex> pdxs = new ArrayList<>();
-	public static ArrayList<String> zonas = new ArrayList<>();
-	public static ArrayList<Gimnasio> gim = new ArrayList<>();
-	public static ArrayList<AltoMando> altoMando = new ArrayList<>();
+	private static ArrayList<Pokedex> pdxs = new ArrayList<>();
+	private static ArrayList<String> zonas = new ArrayList<>();
+	private static ArrayList<Gimnasio> gim = new ArrayList<>();
+	private static ArrayList<AltoMando> altoMando = new ArrayList<>();
 	
 	public static void main(String[] args) throws IOException {
 		App a = new App();
@@ -933,27 +933,6 @@ public class App {
 		br.close();
 	}
 	
-	// Función lectura de archivo "Alto Mando"
-	private void leerAltoMando() throws IOException {
-		BufferedReader br = new BufferedReader(new FileReader("Alto Mando.txt"));
-	    String linea;
-
-	    while ((linea = br.readLine()) != null) {
-	        String[] partes = linea.split(";");
-	        int nro = Integer.parseInt(partes[0]);
-	        String nombre = partes[1];
-
-	        AltoMando am = new AltoMando(nro, nombre);
-	        altoMando.add(am);
-	        
-	        for (int i = 2; i <= 7; i++) {
-	            Pokedex poke = buscarPoke(partes[i]);
-	            am.agregarP(poke); 
-	        }
-	    }
-	    br.close();
-	}
-	
 	// lee el archivo "Gimnasios
 	private void leerGimnasios() throws IOException {
 		BufferedReader br = new BufferedReader(new FileReader("Gimnasios.txt"));
@@ -976,6 +955,25 @@ public class App {
 
 		br.close();
 
+	}// Función lectura de archivo "Alto Mando"
+	private void leerAltoMando() throws IOException {
+		BufferedReader br = new BufferedReader(new FileReader("Alto Mando.txt"));
+	    String linea;
+
+	    while ((linea = br.readLine()) != null) {
+	        String[] partes = linea.split(";");
+	        int nro = Integer.parseInt(partes[0]);
+	        String nombre = partes[1];
+
+	        AltoMando am = new AltoMando(nro, nombre);
+	        altoMando.add(am);
+	        
+	        for (int i = 2; i <= 7; i++) {
+	            Pokedex poke = buscarPoke(partes[i]);
+	            am.agregarP(poke); 
+	        }
+	    }
+	    br.close();
 	}
 
 }
