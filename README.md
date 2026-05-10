@@ -15,7 +15,7 @@ Dentro de las mecánicas principales del juego se incluirán combates basados en
 
 Finalmente, el proyecto busca aplicar conceptos fundamentales de programación, manejo de archivos, estructuras de datos y diseño orientado a objetos, desarrollando un sistema funcional, dinámico e interactivo que simule varias mecánicas clásicas de la franquicia Pokémon.
 
-## Integrante
+## Integrantes
 - Nombre Completo: Diego Nikolas Serrano Fuentes 
   - RUT: 22.105.561-6 
   - GitHub: diegoserrano-cloud
