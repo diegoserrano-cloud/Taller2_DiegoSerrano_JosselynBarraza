@@ -12,6 +12,7 @@ La aplicación será desarrollada utilizando Programación Orientada a Objetos (
 Dentro de las mecánicas principales del juego se incluirán combates basados en la suma de estadísticas de los Pokémon y en la efectividad de tipos, utilizando una matriz bidimensional para determinar ventajas y desventajas entre ellos. El jugador podrá capturar Pokémon según probabilidades de aparición, intercambiar integrantes de su equipo mediante el PC y progresar derrotando gimnasios en orden hasta poder acceder al desafío final del Alto Mando.
 
 Dentro de las mecánicas principales del juego se incluirán combates basados en la suma de estadísticas de los Pokémon y en la efectividad de tipos, utilizando una matriz bidimensional para determinar ventajas y desventajas entre ellos. El jugador podrá capturar Pokémon según sus probabilidades de aparición, intercambiar integrantes de su equipo mediante el PC y avanzar derrotando gimnasios en orden hasta acceder al desafío final contra el Alto Mando, con el objetivo de coronarse como campeón.
+
 Finalmente, el proyecto busca aplicar conceptos fundamentales de programación, manejo de archivos, estructuras de datos y diseño orientado a objetos, desarrollando un sistema funcional, dinámico e interactivo que simule varias mecánicas clásicas de la franquicia Pokémon.
 
 ## Integrante
