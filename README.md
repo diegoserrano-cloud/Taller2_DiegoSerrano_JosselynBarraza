@@ -28,14 +28,14 @@ Finalmente, el proyecto busca aplicar conceptos fundamentales de programación, 
 - Taller2_DiegoSerrano_JosselynBarraza
     - src
         - Clases
-            - AltoMando.java
-            - Gimnasio.java
-            - Jugador.java
-            - Pokedex.java
-            - TablaTipos.java
+            - AltoMando.java # Esta se encarga de representar a los miembros del Alto mando
+            - Gimnasio.java # Representa cada gimnasio con su líder y pokémones
+            - Jugador.java # Se encarga del estado del jugador y sus pokémones
+            - Pokedex.java # Datos de cada pokémon 
+            - TablaTipos.java #Matriz que se encarga de ver debilidades y fortalezas de cada tipo de pokémon
             - package-info.java
         - Logica
-            - App.java
+            - App.java # Clase principal que contiene toda la logica detrás del juego
             - package-info.java
         - module-info.java
     - .ruta de clases
@@ -47,3 +47,12 @@ Finalmente, el proyecto busca aplicar conceptos fundamentales de programación, 
     - Pokedex.txt
     - Registros.txt
 ## Instrucciones 
+#Requisitos previos
+- Java JDK 11 o superior instalado
+- Tener algún IDE instalado compatible con java, por ejemplo, Eclipse IDE o Visual Studio Code.
+
+#Instrucciones de ejecución
+1.- Importar el proyecto dentro del IDE seleccionado.
+2.- Seleccionar la carpeta src -> package "Logica" -> Clase "App".
+3.- Una vez dentro buscar el boton de "Play".
+4.- Disfrutar del juego :D
