@@ -47,12 +47,12 @@ Finalmente, el proyecto busca aplicar conceptos fundamentales de programación, 
     - Pokedex.txt
     - Registros.txt
 ## Instrucciones 
-#Requisitos previos
-- Java JDK 11 o superior instalado
-- Tener algún IDE instalado compatible con java, por ejemplo, Eclipse IDE o Visual Studio Code.
+- Requisitos previos
+  - Java JDK 11 o superior instalado
+  - Tener algún IDE instalado compatible con java, por ejemplo, Eclipse IDE o Visual Studio Code.
 
-#Instrucciones de ejecución
-1.- Importar el proyecto dentro del IDE seleccionado.
-2.- Seleccionar la carpeta src -> package "Logica" -> Clase "App".
-3.- Una vez dentro buscar el boton de "Play".
-4.- Disfrutar del juego :D
+-Instrucciones de ejecución
+  - Importar el proyecto dentro del IDE seleccionado.
+  - Seleccionar la carpeta src -> package "Logica" -> Clase "App".
+  - Una vez dentro buscar el boton de "Play".
+  - Disfrutar del juego :D
