@@ -51,7 +51,7 @@ Finalmente, el proyecto busca aplicar conceptos fundamentales de programación, 
   - Java JDK 11 o superior instalado
   - Tener algún IDE instalado compatible con java, por ejemplo, Eclipse IDE o Visual Studio Code.
 
--Instrucciones de ejecución
+- Instrucciones de ejecución
   - Importar el proyecto dentro del IDE seleccionado.
   - Seleccionar la carpeta src -> package "Logica" -> Clase "App".
   - Una vez dentro buscar el boton de "Play".
